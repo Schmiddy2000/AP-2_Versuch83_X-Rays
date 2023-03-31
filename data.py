@@ -5,7 +5,7 @@ import math
 
 voltage = 25e3
 time_span = 20
-LiF_d = 201.38 * 1e-12
+LiF_d = 201 * 1e-12
 
 background_rate = 62 / 180
 
@@ -44,9 +44,9 @@ print('write between', counts2[counts_index2 - 1], 'and', counts2[counts_index2]
 
 angles_in_radians = angles * np.pi / 180
 angles_in_radians2 = angles2 * np.pi / 180
-lambdas = 2 * LiF_d * np.sin(angles_in_radians)
-upper_lambda = 2 * LiF_d * np.sin(angles_in_radians + 0.13 * np.pi / 180)
-lower_lambda = 2 * LiF_d * np.sin(angles_in_radians - 0.13 * np.pi / 180)
+lambdas = 2 * LiF_d * np.sin(angles_in_radians) * 1e12
+upper_lambda = 2 * LiF_d * np.sin(angles_in_radians + 0.13 * np.pi / 180) * 1e12
+lower_lambda = 2 * LiF_d * np.sin(angles_in_radians - 0.13 * np.pi / 180) * 1e12
 lambdas2 = 2 * LiF_d * np.sin(angles_in_radians2)
 upper_lambda2 = 2 * LiF_d * np.sin(angles_in_radians2 + 0.13 * np.pi / 180)
 lower_lambda2 = 2 * LiF_d * np.sin(angles_in_radians2 - 0.13 * np.pi / 180)
@@ -147,12 +147,12 @@ lower2 = rate2 - rate2_error
 
 
 if len(angles2) == len(counts2):
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(12, 5))
 
-    plt.subplot(2, 1, 1)
+    # plt.subplot(2, 1, 1)
 
-    plt.title('Vergleich der beiden Spektren')
-    # plt.xlabel(r'Winkel $\theta$ in [°]')
+    plt.title('Spektrum des unbekannten Kristalls')
+    plt.xlabel(r'Winkel $\theta$ in [°]')
     plt.ylabel(r'Zählrate in [s$^{-1}$]')
 
     plt.fill_between(angles2, upper2, lower2, where=upper2 >= lower2, interpolate=True, color='pink',
@@ -169,27 +169,28 @@ if len(angles2) == len(counts2):
     plt.xlim(0, 45)
     plt.legend()
 
-    plt.subplot(2, 1, 2)
+    # plt.subplot(2, 1, 2)
 
-    plt.xlabel(r'Winkel $\theta$ in [°]')
-    plt.ylabel(r'Zählrate in [s$^{-1}$]')
-
-    plt.fill_between(angles, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
-                     alpha=0.6)
-    plt.fill_between(angles + 0.13, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
-                     alpha=0.6)
-    plt.fill_between(angles - 0.13, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
-                     alpha=0.6, label='Konfidenzband')
-
-    plt.semilogy(angles, rate, lw=0.7, ls='--', c='black', label='Verbindungslinie')
-    # plt.errorbar(angles, rate, xerr=np.zeros(len(angles)) + 0.13, fmt='none', capsize=3,
-    #              capthick=0.6, elinewidth=0.6, ecolor='black')
-    plt.scatter(angles, rate, marker='o', s=3, c='b', label='Messdaten')
-    plt.xlim(0, 45)
-    # plt.xlim(130, 180)
-
-    plt.subplots_adjust(top=0.95, bottom=0.08, left=0.08, right=0.95)
-    plt.legend()
-    plt.savefig('Spektrum_vergleich.png', dpi=300)
+    # plt.title('Spektrum des LiF-Kristalls')
+    # plt.xlabel(r'Wellenlänge $\lambda$ in [nm]')
+    # plt.ylabel(r'Zählrate $R$ in [s$^{-1}$]')
+    #
+    # plt.fill_between(lambdas, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
+    #                  alpha=0.6)
+    # plt.fill_between(lambdas + 0.8, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
+    #                  alpha=0.6)
+    # plt.fill_between(lambdas - 0.8, upper1, lower1, where=upper1 >= lower1, interpolate=True, color='pink',
+    #                  alpha=0.6, label='Konfidenzband')
+    #
+    # plt.semilogy(lambdas, rate, lw=0.7, ls='--', c='black', label='Verbindungslinie')
+    # # plt.errorbar(angles, rate, xerr=np.zeros(len(angles)) + 0.13, fmt='none', capsize=3,
+    # #              capthick=0.6, elinewidth=0.6, ecolor='black')
+    # plt.scatter(lambdas, rate, marker='o', s=3, c='b', label='Messdaten')
+    # # plt.xlim(0, 45)
+    # plt.xlim(0, 284.25)
+    # #
+    plt.subplots_adjust(top=0.95, bottom=0.1, left=0.08, right=0.95)
+    # plt.legend()
+    plt.savefig('Spektrum2.png', dpi=300)
 
     plt.show()

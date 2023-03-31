@@ -47,6 +47,22 @@ d2_beta = 139.163 * 1e-12 / (2 * np.sin(math.radians(30.42)))
 d2_alpha = 153.957 * 1e-12 / (2 * np.sin(math.radians(34.12)))
 
 
+def r(x): return round(x, 3)
+
+
+def GetDWithErrors(bestG_array, uncertainty_array):
+    weights = 1 / np.square(uncertainty_array)
+    weighted_avg = np.average(bestG_array, weights=weights)
+    new_uncertainty = np.sqrt(1 / np.sum(weights))
+
+    print('Neuer Bestwert für g:', r(weighted_avg * 1e12))
+    print('Unsicherheit auf den Bestwert:', r(new_uncertainty * 1e12))
+    return None
+
+
+GetDWithErrors([d2_gr, d2_alpha, d2_beta], [delta_d2_gr, delta_d2_alpha, delta_d2_beta])
+
+
 print('\nd_gr = (', round(d2_gr * 1e12, 3), '+-', round(delta_d2_gr * 1e12, 3), ') pm')
 print('\nd_beta =', round(d2_beta * 1e12, 3), '+-', round(delta_d2_beta * 1e12, 3), ') pm')
 print('\nd_alpha =', round(d2_alpha * 1e12, 3), '+-', round(delta_d2_alpha * 1e12, 3), ') pm')
